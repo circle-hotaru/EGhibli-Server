@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.circlehotarux.eghibli.mapper.FilmMapper">
+
+    <resultMap id="FilmResultMap" type="me.circlehotarux.eghibli.entity.Film">
+        <result column="film_id" jdbcType="VARCHAR" property="filmId" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="director" jdbcType="VARCHAR" property="director" />
+        <result column="producer" jdbcType="VARCHAR" property="producer" />
+        <result column="release_date" jdbcType="INTEGER" property="releaseDate" />
+        <result column="poster" jdbcType="VARCHAR" property="poster" />
+    </resultMap>
+
+    <!--获取电影-->
+    <select id="getFilm" resultType="me.circlehotarux.eghibli.entity.Film">
+        SELECT *
+            FROM films
+                WHERE film_id = #{filmId}
+    </select>
+
+    <select id="getFilms" resultMap="FilmResultMap">
+        SELECT film_id,title,description,director,producer,release_date,poster
+            FROM films
+    </select>
+
+    <select id="searchFilms" resultMap="FilmResultMap">
+        SELECT *
+            FROM films
+                WHERE title like #{filter} or director like #{filter}
+    </select>
+</mapper>
